@@ -1,0 +1,190 @@
+
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<base target="_top">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title> L'Eucalyptus dans le Maroc</title>
+		
+		<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+	
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+		<script src= "eucaly_geo2.js" ></script>	
+		<script src= "liege_geo2.js" ></script>	
+		<script src= "Pin.js" ></script>	
+		<script src= "vert_geo2.js" ></script>
+		<script src= "zen_geoo2.js"></script>	
+        <script src= "thuya_geo2.js"></script>
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0;
+			}
+			.leaflet-container {
+				height: 400px;
+				width: 600px;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			h1 {
+			 margin: 0 0 5px;
+             color: rgb(219, 13, 13);
+			}
+		</style>
+	    <style>
+			 #map { 
+				height: 500px; 
+				width:  800px;
+				margin-left: auto;
+                margin-right: auto 
+			}
+			.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+  /*border-radius: 5px;*/
+  line-height: 24px;
+  color: #555;
+}
+.legend h4 {
+  text-align: center;
+  font-size: 16px;
+  margin: 2px 12px 8px;
+  color: #777;
+}
+
+.legend span {
+  position: relative;
+  bottom: 3px;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin: 0 8px 0 0;
+  opacity: 0.7;
+}
+
+.legend i.icon {
+  background-size: 18px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+		</style>
+	</head>
+	<body>
+
+		<div id="map"></div>
+		<script>
+			const map = L.map('map').setView([34.24, -6.4], 13);
+			const attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			const tileUrl='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+			const tiles=L.tileLayer(tileUrl,attribution);
+			tiles.addTo(map);
+	        var Eucalyptus= L.geoJSON(eucalyp,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b> la superficie de cette parcelle est de: </b>' + feature.properties.AREA)
+    },
+    style:{
+        fillColor: 'black' ,  
+        fillOpacity:0.1 ,
+        color: 'GreenYellow',
+    }
+}).addTo(map);
+		
+            var cheneliege= L.geoJSON(liege,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b> la superficie de cette parcelle est de: </b>' + feature.properties.AREA)
+    },
+    style:{
+        fillColor: 'black' ,  
+        fillOpacity:0.1 ,
+        color: 'DarkGoldenrod',
+    }
+}).addTo(map);
+			var pin =L.geoJSON(Pin,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b> la superficie de cette parcelle est de: </b>' + feature.properties.AREA)
+    },
+    style:{
+        fillColor: 'black' ,  
+        fillOpacity:0.1 ,
+        color: 'BurlyWood',
+    }
+    }).addTo(map);
+			var Thuya = L.geoJSON(thuya,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b> la superficie de cette parcelle est de: </b>' + feature.properties.Shape_Area)
+    },
+    style:{
+        fillColor: 'black' ,  
+        fillOpacity:0.1 ,
+        color: 'SeaGreen',
+    }
+    }).addTo(map);
+
+			var vert=L.geoJSON(chenevert,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b> la superficie de cette parcelle est de: </b>' + feature.properties.Area)
+    },
+    style:{
+        fillColor: 'black' ,  
+        fillOpacity:0.1 ,
+        color: 'LimeGreen',
+    }
+    }).addTo(map);
+			var chenezene= L.geoJSON(zene,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b> la superficie de cette parcelle est de: </b>' + feature.properties.Area)
+    },
+    style:{
+        fillColor: 'black' ,  
+        fillOpacity:0.1 ,
+        color: 'DarkGreen',
+    }
+    }).addTo(map);
+			var markerMaamoura = L.marker([34.14820434370523, -6.615486673223911]).addTo(map);
+			markerMaamoura.bindPopup("La foret de Maamoura!").openPopup();
+			var markerCeintvert = L.marker([33.95272276448973, -6.911065576934893]).addTo(map);
+			markerCeintvert.bindPopup("la ceinture verte").openPopup();
+			var markerSidiBoughaba = L.marker([34.24055103229894, -6.683554470693348]).addTo(map);
+			markerSidiBoughaba.bindPopup("Lac Sidi Boughaba").openPopup();
+			var markerMenzeh = L.marker([33.85418139915844, -6.881156895574432]).addTo(map);
+			markerMenzeh.bindPopup("foret du Menzeh").openPopup();
+			var markerGhareb = L.marker([34.33060376018541, -6.171089920075258]).addTo(map);
+			markerGhareb.bindPopup("le foret du Ghareb").openPopup();
+			var markerGhareb = L.marker([34.33060376018541, -6.171089920075258]).addTo(map);
+			markerGhareb.bindPopup("le foret du Ghareb").openPopup();
+			var popup = L.popup();
+            function onMapClick(e) {
+            popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+             }
+			 var legend = L.control({ position: "bottomright" });
+
+             legend.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += "<h4>Légende</h4>";
+            div.innerHTML += '<i style="background: #9ACD32"></i><span> Eucalyptus </span><br>';
+            div.innerHTML += '<i style="background: #B8860B"></i><span>chene liège</span><br>';
+            div.innerHTML += '<i style="background: #DEB887"></i><span>Pin</span><br>';
+            div.innerHTML += '<i style="background: #2E8B57"></i><span>Thuya</span><br>';
+            div.innerHTML += '<i style="background: #32CD32"></i><span>chene vert</span><br>';
+            div.innerHTML += '<i style="background: #006400"></i><span> chene zene </span><br>';
+            return div;
+            };
+            legend.addTo(map);
+             
+   
+			   
+    </script>
+	</body>
+	</html>
